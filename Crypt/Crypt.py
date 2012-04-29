@@ -78,7 +78,6 @@ class Crypt:
         '''Defines a multiplicative substitution according to: number=multiplicative substitution number, c is set to "e" by default to signify encrpytion. For decryption, set c="d"'''
         if c=='d' and number!=1:
             number=self.modInv(number,26)
-        print number
         for i in range(len(self.numbers)):
             self.numbers[i]=(self.numbers[i]*number)%26
             if self.numbers[i]==0:
@@ -92,8 +91,8 @@ class Crypt:
         if c=='d':
             m=self.modInv(m,26)
             b=(-b*m)%26
-        print "slope: "+str(m)
-        print "shift: "+str(b)
+#        print "slope: "+str(m)
+#        print "shift: "+str(b)
         for i in range(len(self.numbers)):
             self.numbers[i]=((self.numbers[i]*m)+b)%26
             if self.numbers[i]==0:
@@ -104,11 +103,11 @@ class Crypt:
 
     def letter_frequency(self):
         '''Graphs the letter frequency.'''
-        print 'The length of the message is: '+str(len(self.message))
+        length='The Length of the Message is: '+str(len(self.message))
         array=[]
         array2=[]
         letterarray=[]
-        freq='The Frequency of Letters is: \n'
+        self.freq='The Frequency of Letters is: \n'
         for i in range(26):
             array.append(0)
         for i in range(26):
@@ -118,10 +117,7 @@ class Crypt:
         for number in self.numbers:
             array[number-1]=array[number-1]+1
         for i in range(26):
-            freq+= chr(i+97)+':  '+str(array[i])+'\n'
-        g = open('LetterFrequencies.txt', "w")
-        g.write(freq)
-        g.close()
+            self.freq+= chr(i+97)+':  '+str(array[i])+'\n'
         ax = plt.gca()
         ax.set_xticks(array2)
         ax.set_xticklabels(letterarray)
@@ -129,10 +125,14 @@ class Crypt:
         plt.plot(array2,array,'bs')
         plt.xlabel('Letters')
         plt.ylabel('Occurances')
-        plt.title('Discrete Plot of Letter Frequency')
+        plt.title('Discrete Plot of Letter Frequency:\n'+length)
         plt.grid(True)
         plt.show()
-
+        
+    def get_lf(self):
+        return self.freq
+    def get_message(self):
+        return self.message
 
 def choice(d,app):
     '''Allows the user to choose what encryption or decryption to use.'''
