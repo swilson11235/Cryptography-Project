@@ -119,9 +119,9 @@ class Crypt:
             array[number-1]=array[number-1]+1
         for i in range(26):
             freq+= chr(i+97)+':  '+str(array[i])+'\n'
-        g = open('tmp.txt', "w")
+        g = open('LetterFrequencies.txt', "w")
         g.write(freq)
-
+        g.close()
         ax = plt.gca()
         ax.set_xticks(array2)
         ax.set_xticklabels(letterarray)
